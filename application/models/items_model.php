@@ -13,4 +13,32 @@ class items_model extends CI_Model{
 		return $this->db->insert_id();
 	}
 	
+	public function exists($data=null)
+	{
+		$where = null;
+		
+		if ($data == null)
+			return null;
+		else
+		{
+			
+			foreach ($data as $key => $value)
+			{
+				$where[$key] = $value;
+			}
+			
+			$this->db->where($where);
+			$query = $this->db->get($this->table_name);
+			
+			if ($query->num_rows() > 0)
+			{
+				$result = $query->result_array();
+				
+				return $result;
+			}
+			else
+				return null;
+		}
+	}
+	
 }
