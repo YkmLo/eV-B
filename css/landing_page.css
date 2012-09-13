@@ -19,3 +19,12 @@ a:link, a:visited, a:active, a:hover{text-decoration:none; color:inherit;}
 #fb_button:hover{background-position:0px 90px}
 #fb_button:active{background-position:0px 45px}
 #fb_text{position:relative; left:70px; top:10px; font-weight:bold; font-size:18px;}
+
+#logo
+{
+	width:250px;
+	position:absolute;
+	top:20%;
+	left:50%;
+	margin-left:-125px;
+}
