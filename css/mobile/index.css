@@ -1,0 +1,13 @@
+body{
+	margin:0px;
+	padding:0px;
+	background-color: #1d395b;
+	background-image: url(../images/radial-background.png);
+	background-position: center center;
+	background-repeat: no-repeat;
+	background: -webkit-gradient(radial, center center, 0, center center, 460, from(#3a5897), to(#1d395b));
+	background: -webkit-radial-gradient(circle, #3a5897, #1d395b);
+	background: -moz-radial-gradient(circle, #3a5897, #1d395b);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
