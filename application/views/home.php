@@ -8,10 +8,12 @@
         <div class="book_collection">
             <?php  for($i=0;$i<3;$i++):?>
                	<?php if($flagdata>=$total) break; ?>
-                <div <?php if($i==0):?> style="margin-left:90px;" <?php endif;?> class="book">
-                    <div ><img class="image_book" src="<?php echo base_url()?>/images/dummy.jpg" /></div>
-                    <div class="image_hash"><?php echo $data[$flagdata]['bookname']; ?></div>
-                </div>
+                <a href="<?php echo base_url();?><?php echo $data[$flagdata]['bookid_pk'];?>">
+                    <div <?php if($i==0):?> style="margin-left:90px;" <?php endif;?> class="book">
+                        <div ><img class="image_book" src="<?php echo base_url()?>/images/dummy.jpg" /></div>
+                        <div class="image_hash"><?php echo $data[$flagdata]['bookname']; ?></div>
+                    </div>
+                </a>
                 
      		<?php $flagdata++;  endfor; ?>
             <div style="clear:both"></div>
