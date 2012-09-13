@@ -1,0 +1,76 @@
+#book{	
+	width:1000px;
+	height:599px;
+	transition: margin-left 0.2s ease-in-out;
+	-moz-transition: margin-left 0.2s ease-in-out;
+	-webkit-transition: margin-left 0.2s ease-in-out;
+}
+
+.p1, .p2{
+	background-image:url(../images/cover-firstpage.png);
+}
+
+.last, .last-1{
+	background-image:url(../images/cover-normal.png);
+}
+
+.sheet{
+	background-image:url(../images/page-bg.jpg);
+}
+
+.odd{
+	background-position:right;
+}
+
+.even{
+	background-position:left;
+}
+
+#book .page-wrapper{
+	-webkit-perspective:2000px;
+	-moz-perspective:2000px;
+	-ms-perspective:2000px;
+	-o-perspective:2000px;
+	perspective:2000px;
+}
+
+.own-size{
+	width:475px;
+	height:550px;
+	overflow:hidden;
+}
+
+#book div[page="1"] > div, #book div[page="2"] > div{
+	overflow:visible !important;
+	visibility:visible;
+}
+
+.p1 .side, .last-1 .side{
+	width:5px;
+	height:599px;
+	position:absolute;
+	top:0;
+	left:495px;
+	
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0, #333), color-stop(0.5,  #555), color-stop(1,  #333));
+	background-image:-webkit-linear-gradient(left, #333, #555, #333);
+	background-image:-moz-linear-gradient(left, #333, #555, #333);
+	background-image:-ms-linear-gradient(left, #333, #555, #333);
+	background-image:-o-linear-gradient(left, #333, #555, #333);
+	background-image:linear-gradient(left, #333, #555, #333);
+	
+	-webkit-transform:rotateY(-90deg);
+	-moz-transform:rotateY(-90deg);
+	-o-transform:rotateY(-90deg);
+	-ms-transform:rotateY(-90deg);
+	transform:rotateY(-90deg);
+
+	-webkit-transform-origin:top right;
+	-moz-transform-origin:top right;
+	-o-transform-origin:top right;
+	-ms-transform-origin:top right;
+	transform-origin:top right;
+	
+	z-index:100000;
+}
+
