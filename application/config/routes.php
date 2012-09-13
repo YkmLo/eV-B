@@ -45,6 +45,7 @@ $route['fb_authorized'] = 'index/fb_authorized';
 $route['404_override'] = '';
 $route['book'] = "index/book";
 $route['mobile'] = "index/mobile";
+$route['logout'] = "index/logout";
 
 
 /* End of file routes.php */
