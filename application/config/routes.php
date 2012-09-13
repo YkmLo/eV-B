@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /*
 | -------------------------------------------------------------------------
@@ -44,7 +45,7 @@ $route['fb_connection'] = 'index/fb_connection';
 $route['fb_authorized'] = 'index/fb_authorized';
 $route['404_override'] = '';
 $route['book'] = "index/book";
+$route['mobile'] = "index/mobile";
 
 
 /* End of file routes.php */
-/* Location: ./application/config/routes.php */

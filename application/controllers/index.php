@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 
 if (!defined('BASEPATH'))
@@ -42,11 +43,11 @@ class Index extends CI_Controller {
    
    public function mobile()
    {
-      $view_data['header'] = $this->load->view('header', $view_data, true);
-      $view_data['content'] = $this->load->view('home', $view_data, true);
-      $view_data['footer'] = $this->load->view('footer', $view_data, true);
+      $view_data['header'] = $this->load->view('mobile/header', $view_data, true);
+      $view_data['content'] = $this->load->view('mobile/landing_page', $view_data, true);
+      $view_data['footer'] = $this->load->view('mobile/footer', $view_data, true);
 
-      $this->load->view('index', $view_data);     
+      $this->load->view('mobile/index', $view_data);     
    }
 
 	public function fb_connection()
@@ -153,6 +154,3 @@ class Index extends CI_Controller {
 		}
 	}
 }
-
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */
