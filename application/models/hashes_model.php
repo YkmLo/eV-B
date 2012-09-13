@@ -10,7 +10,8 @@ class Hashes_model extends CI_Model{
 	
 	public function set($data)
 	{
-		return $this->db->insert($this->table_name, $data);
+		$this->db->insert($this->table_name, $data);
+		return $this->db->insert_id();
 	}
 	
 	
