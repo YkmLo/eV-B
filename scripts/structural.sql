@@ -11,6 +11,7 @@ CREATE TABLE `users` (
 
 CREATE TABLE `books` (
   `bookid_pk` bigint(20) NOT NULL AUTO_INCREMENT,
+  `bookname` varchar(100) NOT NULL,
   `type` enum('private', 'public') NOT NULL,
   `userid_fk` bigint(20) NOT NULL,
   `date_created` datetime NOT NULL,
