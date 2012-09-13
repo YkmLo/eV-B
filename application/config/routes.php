@@ -47,6 +47,7 @@ $route['404_override'] = '';
 $route['book'] = "index/book";
 $route['mobile'] = "index/mobile";
 $route['logout'] = "index/logout";
+$route['create_page']="index/create_page";
 
 
 /* End of file routes.php */
