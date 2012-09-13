@@ -151,15 +151,13 @@ class Index extends CI_Controller {
 				if ($response != null)
 				{
 					//user exists in database, log the user in and then redirect to home
-					$fb_data['userid_pk'] = $response->user_data->userid_pk;
+					$fb_data['userid_pk'] = $response['0']['userid_pk'];
 					$fb_data['fb_id'] = $fb_profile['id'];
 					$fb_data['fb_access_token'] = Fb::get()->getExtendedAccessToken();
 					
-					$update_data['user_data'] = $fb_data;
+					$update_response = $this->user_model->update($fb_data['userid_pk'], $fb_data);
 					
-					$update_response = $this->user_model->update($update_data);
-					
-					$this->session->set_userdata(array("userid_pk" => $response->user_data->userid_pk));
+					$this->session->set_userdata(array("userid_pk" => $response['0']['userid_pk']));
 					$this->session->set_userdata(array("logged_in" => true));
 					
 					echo '<script>';

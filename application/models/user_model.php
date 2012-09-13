@@ -51,8 +51,6 @@ class user_model extends CI_Model {
 	
 	public function update($id, $data)
 	{
-		
-
 		return $this->db->update($this->table_name, $data, "userid_pk = " . $id);
 	}
 	

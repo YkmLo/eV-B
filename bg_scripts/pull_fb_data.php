@@ -8,16 +8,15 @@ $fb = new Facebook(array(
                 'cookie' => true
             ));
 
-$user_id = $argv[1];
-$couple_fb_id = $argv[2];
-$couple_id = $argv[3];
-$fb_access_token = $argv[4];
+$fb_access_token = $argv[1];
+$base_path = $argv[2];
+$user_id = $argv[3];
 
 $fb->setAccessToken($fb_access_token);
 
-$user_data_folder = md5('MNQWRFVPOIUYTREWQALSKDJFHG!' . $user_id);
-$basedir = '/var/www/Lopidopi_data/';
-$save_path = $basedir . $user_data_folder;
+$user_data_folder = md5('dfgWERD3423DF3rdsfhg5345DFS3G45!' . $user_id);
+
+$save_path = $base_path . $user_data_folder;
 
 $photos = array();
 
@@ -30,7 +29,7 @@ process_array();
 
 function get_photos($page)
 {
-	global $fb, $couple_fb_id, $user_id, $couple_id, $photos;
+	global $fb, $user_id, $photos;
 	$fb_photos = $fb->api($page);
 	
 	if (count($fb_photos['data']) == 0)
@@ -38,6 +37,11 @@ function get_photos($page)
 
 	foreach($fb_photos['data'] as $fb_photo)
 	{
+		$caption = $fb_photo['name'];
+		
+		$tags = explode($caption, '#');
+		
+		
 		$flag_tag = false;
 		foreach($fb_photo['tags']['data'] as $tagged)
 		{
