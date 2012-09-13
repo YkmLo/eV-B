@@ -1,0 +1,16 @@
+/* CSS Document */
+*
+{
+	font-family:Arial;	
+}
+a:link, a:visited, a:active, a:hover{text-decoration:none; color:inherit;}
+#fb_button
+{
+	width:296px;
+	height:45px;
+	background:url(../images/fb_button.png);
+}
+
+#fb_button:hover{background-position:0px 90px}
+#fb_button:active{background-position:0px 45px}
+#fb_text{position:relative; left:70px; top:10px; font-weight:bold; font-size:18px;}
