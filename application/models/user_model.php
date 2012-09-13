@@ -44,12 +44,12 @@ class user_model extends CI_Model {
 //		}
 //	}
 //	
-//	public function set($data)
-//	{
-//		// use simpleLoginSecure library to create 
-//		
-//		//return $this->db->insert($this->table_name, $data);
-//	}
+	public function set($data)
+	{	
+	echo"lalalala";
+	   print_r($data);exit;	
+		return $this->db->insert($this->table_name, $data);
+	}
 	
 	public function update($id, $data)
 	{

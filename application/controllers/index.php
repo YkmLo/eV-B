@@ -10,6 +10,7 @@ class Index extends CI_Controller {
       error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
       $this->load->helper('url');
 		$this->load->library('facebook/Fb');
+		$this->load->helper('utilities');
    }
    
    
@@ -135,7 +136,7 @@ class Index extends CI_Controller {
 			curl_close ($ch);
 			
 			$fb_profile = json_decode($fb_obj);
-			
+			//print_r($fb_profile); exit;
 			//convert fb_profile to array
 			$fb_profile = object_to_array($fb_profile);
 			
@@ -169,6 +170,17 @@ class Index extends CI_Controller {
 				else
 				{
 					//user doesn't exists in database, register
+					$new_user_data = array(
+					 'email' => $fb_profile['email'],
+					 'first_name' => $fb_profile['first_name'],
+					 'last_name' => $fb_profile['last_name'],
+					 'fb_id' => $fb_profile['id'],
+					 'fb_access_token' => Fb::get()->getExtendedAccessToken(),
+					 'date_created' => date(c)
+					);
+					
+					$this->user_model->set($new_user_data);
+					
 					echo '<script>';
 					echo 'window.opener.location.replace("http://google.com");';
 					echo 'self.close();';
