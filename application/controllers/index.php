@@ -25,7 +25,11 @@ class Index extends CI_Controller {
    }
    
    public function home() {
-
+	  $view_data['data']=$this->books_model->get_books();
+	  $total=count($view_data['data']);
+	  $flag=ceil($total/3);
+	  $view_data['total']=$total;
+	  $view_data['flag']=$flag;
       $view_data['header'] = $this->load->view('header', $view_data, true);
       $view_data['content'] = $this->load->view('home', $view_data, true);
       $view_data['footer'] = $this->load->view('footer', $view_data, true);
