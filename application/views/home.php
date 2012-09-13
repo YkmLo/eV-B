@@ -8,7 +8,7 @@
         <div class="book_collection">
             <?php  for($i=0;$i<3;$i++):?>
                	<?php if($flagdata>=$total) break; ?>
-                <a href="<?php echo base_url();?><?php echo $data[$flagdata]['bookid_pk'];?>">
+                <a href="<?php echo base_url();?>book/<?php echo $data[$flagdata]['bookid_pk'];?>">
                     <div <?php if($i==0):?> style="margin-left:90px;" <?php endif;?> class="book">
                         <div ><img class="image_book" src="<?php echo base_url()?>/images/dummy.jpg" /></div>
                         <div class="image_hash"><?php echo $data[$flagdata]['bookname']; ?></div>

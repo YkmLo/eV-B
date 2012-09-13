@@ -26,6 +26,7 @@ class Index extends CI_Controller {
    }
    
    public function home() {
+	   $this->load->model('books_model');
 	  $view_data['data']=$this->books_model->get_books();
 	  $total=count($view_data['data']);
 	  $flag=ceil($total/3);
