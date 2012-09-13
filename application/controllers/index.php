@@ -259,33 +259,48 @@ class Index extends CI_Controller {
 		$this->load->model('books_model');
 		$result = $this->hashes_model->exists(array('hashname_pk' => $tag));
 		$hash_id = 0;
+		$found = 0;
 		if ($result == null)
 		{
 			$this->hashes_model->set(array('hashname_pk' => $tag));
 			$book_id = $this->books_model->create($this->input->post('user_id'), $tag);
 		}
 		else
+		{
 			$book_id = $this->books_model->get_by_name($tag);
+			$found++;
+		}
 
 		$this->load->model('items_model');
-		
-		$photo_id = $this->items_model->insert(array(
-			'type' => 'image',
-			'location' => base_url() . 'data/' . $photo_id . '.jpg',
-			'userid_fk' => $this->input->post('user_id'),
-			'bookid_fk' => $book_id,
-			'date_created' => date('c')
-		));
+		$photo = $this->items_model->exists(array('location' => base_url() . 'data/' . $photo_id . '.jpg'));
+
+		if (!$photo)
+		{
+			$photo_id = $this->items_model->insert(array(
+				'type' => 'image',
+				'location' => base_url() . 'data/' . $photo_id . '.jpg',
+				'userid_fk' => $this->input->post('user_id'),
+				'bookid_fk' => $book_id,
+				'date_created' => date('c')
+			));
+		}
+		else
+		{
+			$photo_id = $photo[0]['itemid_pk'];
+			$found++;
+		}
 		
 		$this->load->model('hashesitems_model');
-		$this->hashesitems_model->set(array('itemid_fk' => $photo_id, 'hashname_fk' => $tag));
+		if ($found != 2)
+			$this->hashesitems_model->set(array('itemid_fk' => $photo_id, 'hashname_fk' => $tag));
 	}
 	
 	public function create_book()
 	{
-		//$command = 'start "" C:/xampp/php/php -q ' . BASEPATH . '../bg_scripts/pull_fb_data.php ' . $fb_data['fb_access_token'] . ' ' . BASEPATH . ' ' . $fb_data['userid_pk'] . ' ' . base_url() . ' ' . $this->input->post('tag');
+		$user_data = $this->session->userdata('user_data');
+		$command = 'start "" C:/xampp/php/php -q ' . BASEPATH . '../bg_scripts/pull_fb_data.php ' . $user_data['fb_access_token'] . ' ' . BASEPATH . ' ' . $user_data['userid_pk'] . ' ' . base_url() . ' ' . $this->input->post('tag');
 
-		//exec($command);
+		exec($command);
 		echo  json_encode(array('status' => 'success'));
 	}
 	

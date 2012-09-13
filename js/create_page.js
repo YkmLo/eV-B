@@ -15,7 +15,7 @@ $(document).ready(function()
 				dataType: 'json',
 				success: function(msg)
 				{
-					alert("test");
+					location.replace('/home');
 				},
 				error: function(msg)
 				{
