@@ -1,4 +1,11 @@
-#book{	
+#content{
+	width:1024px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#book{
+	margin-top:100px;
 	width:1000px;
 	height:599px;
 	transition: margin-left 0.2s ease-in-out;
@@ -10,12 +17,15 @@
 	background-image:url(../images/cover-firstpage.png);
 }
 
-.last, .last-1{
+.last, .beforelast{
 	background-image:url(../images/cover-normal.png);
 }
 
 .sheet{
 	background-image:url(../images/page-bg.jpg);
+	box-shadow:inset 0px 0px 1px 1px #999999;
+	-moz-box-shadow:inset 0px 0px 1px 1px #999999;
+	-webkit-box-shadow:inset 0px 0px 1px 1px #999999;
 }
 
 .odd{
@@ -45,19 +55,19 @@
 	visibility:visible;
 }
 
-.p1 .side, .last-1 .side{
+.p1 .side, .beforelast .side{
 	width:5px;
 	height:599px;
 	position:absolute;
 	top:0;
 	left:495px;
 	
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0, #333), color-stop(0.5,  #555), color-stop(1,  #333));
-	background-image:-webkit-linear-gradient(left, #333, #555, #333);
-	background-image:-moz-linear-gradient(left, #333, #555, #333);
-	background-image:-ms-linear-gradient(left, #333, #555, #333);
-	background-image:-o-linear-gradient(left, #333, #555, #333);
-	background-image:linear-gradient(left, #333, #555, #333);
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0, #539b27), color-stop(0.5,  #3c701c), color-stop(1,  #539b27));
+	background-image:-webkit-linear-gradient(left, #539b27, #3c701c, #539b27);
+	background-image:-moz-linear-gradient(left, #539b27, #3c701c, #539b27);
+	background-image:-ms-linear-gradient(left, #539b27, #3c701c, #539b27);
+	background-image:-o-linear-gradient(left, #539b27, #3c701c, #539b27);
+	background-image:linear-gradient(left, #539b27, #3c701c, #539b27);
 	
 	-webkit-transform:rotateY(-90deg);
 	-moz-transform:rotateY(-90deg);
@@ -74,3 +84,38 @@
 	z-index:100000;
 }
 
+.page-depth-left
+{
+	background-image:url(../images/page-depth-left.png);
+	background-repeat:none;
+	background-position:18px 0;
+	width:18px;
+	height:px;
+	position:absolute;
+	top:25px;
+	left:25px;
+}
+
+.page-depth-left
+{
+	background-image:url(../images/page-depth-left.png);
+	background-repeat:none;
+	background-position:right;
+	width:0px;
+	height:550px;
+	position:absolute;
+	top:25px;
+	right:475px;
+}
+
+.page-depth-right
+{
+	background-image:url(../images/page-depth-right.png);
+	background-repeat:none;
+	background-position:left;
+	width:0px;
+	height:550px;
+	position:absolute;
+	top:25px;
+	left:475px;
+}

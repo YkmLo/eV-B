@@ -1,6 +1,7 @@
 body{
 	margin:0px;
 	padding:0px;
+	width:100%;
 	background-color: #1d395b;
 	background-image: url(../images/radial-background.png);
 	background-position: center center;
@@ -10,4 +11,5 @@ body{
 	background: -moz-radial-gradient(circle, #3a5897, #1d395b);
     background-repeat: no-repeat;
     background-attachment: fixed;
+	overflow-x:hidden;
 }
