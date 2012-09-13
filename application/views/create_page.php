@@ -1,6 +1,6 @@
 <link href="<?php echo base_url(); ?>css/create_page.css" rel="stylesheet" type="text/css" />
 <div id="page_content">
-    <div id="page_title">CREATE NEW EVENT BOOK</div>
+    <div id="page_title">CREATE NEW ALBUM</div>
 
     <div id="create_form">
     <form action="<?php echo base_url();?>create_page" method="post" >
