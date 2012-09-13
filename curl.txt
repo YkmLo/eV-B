@@ -1,0 +1,22 @@
+$ch = curl_init ($url);
+
+	    curl_setopt($ch, CURLOPT_HEADER, 0);
+	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	    curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+	    curl_setopt($ch, CURLOPT_SSLVERSION, 3);
+	    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+	    /** ignore ssl verification */
+	    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+	    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+	    /** end of ignore ssl verification */
+
+	    $raw=curl_exec($ch);
+	    curl_close ($ch);
+
+	    if(file_exists($saveto))
+		    unlink($saveto);
+	
+	    $fp = fopen($saveto,'x');
+
+	    fwrite($fp, $raw);
+	    fclose($fp);
