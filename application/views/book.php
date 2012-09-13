@@ -2,6 +2,11 @@
 <link href="<?php echo base_url() ?>css/book.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery.lightbox-0.5.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>js/turn.js"></script>
+<script type="text/javascript">
+	var book_id = <?php echo $book_id ?>;
+	var timelimit = '<?php echo date('Y-m-d H:i:s') ?>';
+	var item_count = <?php echo $item_count ?>;
+</script>
 <script type="text/javascript" src="<?php echo base_url() ?>js/book.js"></script>
 
 <div id="content">
@@ -10,7 +15,7 @@
 	<div class="hard"><div class="side"></div></div>
     <div class="hard">
     	<div class="page-depth-left"></div>
-    </div>
+    </div><!--
     <div class="own-size">
     	<div class="page_content" align="center">
         	<a href="<?php echo base_url() ?>images/sample/asd.jpg">
@@ -77,9 +82,15 @@
             </div>
         </div>
     </div>
-    <div class="own-size"></div>
-    <div class="own-size"></div>
-    <div class="own-size"></div>
+    <div class="own-size"></div>-->
+    
+    <?php for($i=0;$i<$item_count;$i++): ?>
+    	<div class="own-size"></div>
+    <?php endfor; ?>
+    <?php if($item_count%2 != 0):?>
+    	<div class="own-size"></div>
+    <?php endif; ?>
+    
     <div class="hard fixed beforelast">
     	<div class="page-depth-right"></div>
     	<div class="side"></div>
