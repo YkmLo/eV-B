@@ -12,6 +12,7 @@ class Index extends CI_Controller {
 		$this->load->library('facebook/Fb');
 		$this->load->helper('utilities');
 		$this->load->library('session');
+		$this->load->model('books_model');
    }
    
    
