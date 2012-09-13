@@ -235,7 +235,24 @@ class Index extends CI_Controller {
         // redirect to index page
         redirect(base_url(), 'refresh');
 	}
-	
+      public function hash_autocomplete($text) {
+
+		if($text == NULL) exit;
+		$this->load->database();	
+		$query_string = "SELECT * FROM `hashes` WHERE hashname_pk LIKE '$text%'";
+		$query = $this->db->query($query_string);
+		$results = $query->result_array();
+		if($results)
+			foreach($results as $r)
+			{
+					$a['label'] = $r['hashname_pk'];
+					$a['id'] = $r['hashname_pk'];
+					
+					$finalResult[] = $a;
+			}
+		
+		echo json_encode($finalResult);		
+	}
 	public function insert_items()
 	{
 		$photo_id = $this->input->post('photo_id');

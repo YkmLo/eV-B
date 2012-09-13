@@ -44,6 +44,7 @@ $route['fb_connection'] = 'index/fb_connection';
 $route['fb_authorized'] = 'index/fb_authorized';
 $route['insert_items'] = 'index/insert_items';
 $route['404_override'] = '';
+$route['hash_autocomplete/(:any)'] = "index/hash_autocomplete/$1";
 $route['book'] = "index/book";
 $route['mobile'] = "index/mobile";
 $route['logout'] = "index/logout";
