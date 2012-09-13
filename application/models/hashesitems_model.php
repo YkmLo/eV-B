@@ -3,7 +3,7 @@
 class Hashesitems_model extends CI_Model{
 	private $table_name='hashesitems';
 	
-	public function _construct(){
+	public function __construct(){
 		$this->load->database();
 	}
 	

@@ -186,11 +186,7 @@ class Index extends CI_Controller {
 					$this->session->set_userdata(array("userid_pk" => $response['0']['userid_pk']));
 					$this->session->set_userdata(array("user_data" => $response['0']));
 					$this->session->set_userdata(array("logged_in" => true));
-					
-					$command = 'start "" C:/xampp/php/php -q ' . BASEPATH . '../bg_scripts/pull_fb_data.php ' . $fb_data['fb_access_token'] . ' ' . BASEPATH . ' ' . $fb_data['userid_pk'] . ' ' . base_url();
-
-            		exec($command);
-					
+										
 					echo '<script>';
 					echo 'window.opener.location.replace("/home");';
 					echo 'self.close();';
@@ -244,21 +240,39 @@ class Index extends CI_Controller {
 		$photo_id = $this->input->post('photo_id');
 		$tag = $this->input->post('tag');
 		
-		$this->load->model('hashes');
+		$this->load->model('hashes_model');
+		$this->load->model('books_model');
 		$result = $this->hashes_model->exists(array('hashname_pk' => $tag));
 		$hash_id = 0;
 		if ($result == null)
-			$hash_id = $this->hashes_model->set(array('hashname_pk' => $tag));
+		{
+			$this->hashes_model->set(array('hashname_pk' => $tag));
+			$book_id = $this->books_model->create($this->input->post('user_id'), $tag);
+		}
+		else
+			$book_id = $this->books_model->get_by_name($tag);
+
+		$this->load->model('items_model');
 		
-		$photo_id = $this->item_model->insert(array(
+		$photo_id = $this->items_model->insert(array(
 			'type' => 'image',
 			'location' => base_url() . 'data/' . $photo_id . '.jpg',
-			'userid_fk' => $this->session->userdata('userid_pk'),
-			'bookid_fk' => 1,
+			'userid_fk' => $this->input->post('user_id'),
+			'bookid_fk' => $book_id,
 			'date_created' => date('c')
 		));
 		
-		$this->load->model('hashesitems');
-		$this->hashesitems->insert(array('itemid_fk' => $photo_id, 'hashid_fk' => $hash_id));
+		$this->load->model('hashesitems_model');
+		$this->hashesitems_model->set(array('itemid_fk' => $photo_id, 'hashname_fk' => $tag));
+	}
+	
+	public function create_book()
+	{
+		$command = 'start "" C:/xampp/php/php -q ' . BASEPATH . '../bg_scripts/pull_fb_data.php ' . $fb_data['fb_access_token'] . ' ' . BASEPATH . ' ' . $fb_data['userid_pk'] . ' ' . base_url() . ' ' . $this->input->post('tag');
+
+		exec($command);
+		
+		print_r($command);
+		exit;
 	}
 }

@@ -12,42 +12,50 @@ $fb_access_token = $argv[1];
 $base_path = $argv[2];
 $user_id = $argv[3];
 $base_url = $argv[4];
+$user_tag = $argv[5];
 
 $fb->setAccessToken($fb_access_token);
 
 $user_data_folder = md5('dfgWERD3423DF3rdsfhg5345DFS3G45!' . $user_id);
 
-$save_path = $base_path . '../application/data';
+$save_path = $base_path . '../data';
 
 $photos = array();
 
 if (!is_dir($save_path))
 	mkdir($save_path, 0777);
 
-get_photos('/me/photos');
+get_photos('/me?fields=id,name,photos.type(uploaded)');
 
 function get_photos($page)
 {
-	global $fb, $user_id, $photos, $base_url, $save_path;
+	global $fb, $user_id, $photos, $base_url, $save_path, $user_tag;
 	$fb_photos = $fb->api($page);
 	
-	if (count($fb_photos['data']) == 0)
+	if (count($fb_photos['photos']['data']) == 0)
 		return;
 
-	foreach($fb_photos['data'] as $fb_photo)
+	foreach($fb_photos['photos']['data'] as $fb_photo)
 	{
 		if (isset($fb_photo['name']))
 		{
 			$caption = $fb_photo['name'];
 			
-			$tags = explode($caption, '#');
+			$tags = explode('#', $caption);
 			
-			//if (count($tags) > 1)
-			//{
+			if (count($tags) > 1)
+			{
 				$url = $fb_photo['source'];
 				$saveto = $save_path . '/' . $fb_photo['id'] . '.jpg';
+				
+				$found = false;
+				foreach($tags as $tag)
+				{
+					if ($tag == $user_tag)
+						$found = true;
+				}
 		
-				if(!file_exists($saveto))
+				if($found && !file_exists($saveto))
 				{
 					$ch = curl_init ($url);
 			
@@ -72,39 +80,44 @@ function get_photos($page)
 				
 				foreach($tags as $tag)
 				{
-					////set POST variables
-					$url = $base_url . 'insert_items';
-					$fields = array(
-								 "photo_id" => urlencode($fb_photo['id']),
-								 "tag" => urlencode($tag)
-							 );
-							 
-					$fields_string = '';
-				
-					//url-ify the data for the POST
-					foreach($fields as $key=>$value)
+					$tag = trim($tag);
+					if ($tag != '' && $tag == $user_tag)
 					{
-						$fields_string .= $key.'='.$value.'&';
-					}
+						//set POST variables
+						$url = $base_url . 'insert_items';
+						$fields = array(
+									 "photo_id" => urlencode($fb_photo['id']),
+									 "tag" => urlencode($tag),
+									 "user_id" => urlencode($user_id)
+								 );
+								 
+						$fields_string = '';
 					
-					rtrim($fields_string, '&');
-				
-					//open connection
-					$ch = curl_init();
-				
-					//set the url, number of POST vars, POST data
-					curl_setopt($ch,CURLOPT_URL,$url);
-					curl_setopt($ch,CURLOPT_POST,count($fields));
-					curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
-					curl_setopt($ch,CURLOPT_HTTPAUTH,CURLAUTH_DIGEST);
-				
-					//execute post
-					$result = curl_exec($ch);
-				
-					//close connection
-					curl_close($ch);
+						//url-ify the data for the POST
+						foreach($fields as $key=>$value)
+						{
+							$fields_string .= $key.'='.$value.'&';
+						}
+						
+						rtrim($fields_string, '&');
+					
+						//open connection
+						$ch = curl_init();
+					
+						//set the url, number of POST vars, POST data
+						curl_setopt($ch,CURLOPT_URL,$url);
+						curl_setopt($ch,CURLOPT_POST,count($fields));
+						curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
+						curl_setopt($ch,CURLOPT_HTTPAUTH,CURLAUTH_DIGEST);
+					
+						//execute post
+						$result = curl_exec($ch);
+					
+						//close connection
+						curl_close($ch);
+					}
 				}
-			//}
+			}
 		}
 	}
 	

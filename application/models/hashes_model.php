@@ -1,17 +1,16 @@
 <?php
 
-class Hashes_model extends CI_Model{
+class hashes_model extends CI_Model{
 	private $table_name='hashes';
 	
-	public function _construct(){
+	public function __construct(){
 		$this->load->database();
 	}
 	
 	
 	public function set($data)
 	{
-		$this->db->insert($this->table_name, $data);
-		return $this->db->insert_id();
+		return $this->db->insert($this->table_name, $data);
 	}
 	
 	

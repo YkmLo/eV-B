@@ -1,9 +1,9 @@
 <?php
 
-class Booksusers_model extends CI_Model{
+class booksusers_model extends CI_Model{
 	private $table_name='booksusers';
 	
-	public function _construct(){
+	public function __construct(){
 		$this->load->database();
 	}
 	
