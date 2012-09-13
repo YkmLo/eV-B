@@ -24,6 +24,8 @@
 }
 
 .book{
+	cursor:pointer;
+	float:left;
 	display:inline-block;
 	width:230px;
 	height:179px;
