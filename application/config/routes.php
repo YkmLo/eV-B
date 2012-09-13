@@ -40,6 +40,8 @@
 
 $route['default_controller'] = "index";
 $route['home']="index/home";
+$route['fb_connection'] = 'index/fb_connection';
+$route['fb_authorized'] = 'index/fb_authorized';
 $route['404_override'] = '';
 $route['book'] = "index/book";
 
