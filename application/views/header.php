@@ -72,7 +72,7 @@ function go_search()
                             });">
             </div>
             <div id="header_center_right">
-                <a href="#">
+                <a href="<?php echo base_url();?>home">
                     <div class="header_button" ><img src="https://graph.facebook.com/me/picture?access_token=<?php echo $fbat ?>" id="header_picture" /> <?php echo $current_user_name; ?></div>
                 </a>
                 <a href="<?php echo base_url() ?>logout">
