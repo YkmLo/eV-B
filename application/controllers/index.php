@@ -195,4 +195,13 @@ class Index extends CI_Controller {
 			echo '</script>';
 		}
 	}
+	
+	public function logout()
+	{
+		 // destroy session
+        $this->session->sess_destroy();
+        
+        // redirect to index page
+        redirect(base_url(), 'refresh');
+	}
 }
