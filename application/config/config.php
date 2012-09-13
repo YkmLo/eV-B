@@ -362,3 +362,5 @@ $config['proxy_ips'] = '';
 /* Location: ./application/config/config.php */
 
 $config['facebook'] = array('app_id' => '277019759074470', 'app_secret' => 'ddcec0b3141558e73bbf4cd94dcea6dc');
+
+$config['app_salt'] = 'dfgWERD3423DF3rdsfhg5345DFS3G45';
