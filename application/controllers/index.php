@@ -16,6 +16,14 @@ class Index extends CI_Controller {
    public function index() {
 
       $view_data['header'] = $this->load->view('header', $view_data, true);
+      $view_data['content'] = $this->load->view('landing_page', $view_data, true);
+      $view_data['footer'] = $this->load->view('footer', $view_data, true);
+
+      $this->load->view('index', $view_data);
+   }
+   public function home() {
+
+      $view_data['header'] = $this->load->view('header', $view_data, true);
       $view_data['content'] = $this->load->view('home', $view_data, true);
       $view_data['footer'] = $this->load->view('footer', $view_data, true);
 
