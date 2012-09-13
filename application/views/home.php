@@ -1,7 +1,7 @@
 <link href="<?php echo base_url(); ?>css/home.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo base_url();?>js/home.js" rel="stylesheet" type="text/javascript" />
 <div id="home_content"> 
-<a href="<?php echo base_url();?>/create"><input type="button"id="button_add" value="+ ADD"/></a>
+<a href="<?php echo base_url();?>create"><input type="button"id="button_add" value="+ ADD"/></a>
 <div style="clear:both;"></div>
     <div id="bookcase">
         <?php $flagdata=0; for($j=0;$j<$flag;$j++):?>
