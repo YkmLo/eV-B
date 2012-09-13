@@ -49,6 +49,6 @@ $route['book'] = "index/book";
 $route['mobile'] = "index/mobile";
 $route['logout'] = "index/logout";
 $route['create_page']="index/create_page";
-
+$route['create_book']="index/create_book";
 
 /* End of file routes.php */

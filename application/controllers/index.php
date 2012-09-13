@@ -49,18 +49,8 @@ class Index extends CI_Controller {
    }
     public function create_page() {
 	  
-	  $this->load->helper('form');
-	  $this->load->library('form_validation');		
 	
-	  
-	  $this->form_validation->set_rules('tags', 'Tags', 'required');
-	  $this->form_validation->set_rules('type', 'Type', 'required');
-	  
-	  if($this->input->post('submit') && $this->form_validation->run()===TRUE)
-	  {
-	  	$tags = $this->input->post('tags');
-	  	$type = $this->input->post('type');
-	  }
+	 
 	
       $view_data['header'] = $this->load->view('header', $view_data, true);
       $view_data['content'] = $this->load->view('create_page', $view_data, true);
@@ -286,11 +276,9 @@ class Index extends CI_Controller {
 	
 	public function create_book()
 	{
-		$command = 'start "" C:/xampp/php/php -q ' . BASEPATH . '../bg_scripts/pull_fb_data.php ' . $fb_data['fb_access_token'] . ' ' . BASEPATH . ' ' . $fb_data['userid_pk'] . ' ' . base_url() . ' ' . $this->input->post('tag');
+		//$command = 'start "" C:/xampp/php/php -q ' . BASEPATH . '../bg_scripts/pull_fb_data.php ' . $fb_data['fb_access_token'] . ' ' . BASEPATH . ' ' . $fb_data['userid_pk'] . ' ' . base_url() . ' ' . $this->input->post('tag');
 
-		exec($command);
-		
-		print_r($command);
-		exit;
+		//exec($command);
+		echo  json_encode(array('status' => 'success'));
 	}
 }
