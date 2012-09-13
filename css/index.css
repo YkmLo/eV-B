@@ -1,3 +1,5 @@
+a:link, a:visited, a:active, a:hover{text-decoration:none; color:inherit;}
+
 body{
 	margin:0px;
 	padding:0px;

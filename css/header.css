@@ -1,0 +1,78 @@
+/* CSS Document */
+
+#header
+{
+	background:#000;
+	height:30px;
+	position:fixed;
+	width:100%;	
+	z-index:999;
+	top:0px;
+}
+
+#header_center
+{
+	color:#FFF;
+	height:30px;
+	line-height:30px;
+	margin:auto;
+	width:1024px;
+}
+
+#header_center_left
+{
+	height:30px;
+	*zoom:1; display:inline;
+	display:inline-block;
+	line-height:30px;
+	text-align:left;
+	width:400px;
+
+}
+#header_center_right
+{
+	height:30px;
+	*zoom:1; display:inline;
+	display:inline-block;
+	line-height:30px;
+	text-align:right;
+	width:615px;
+	vertical-align:top;
+}
+
+.header_button
+{
+	cursor:pointer;
+	*zoom:1; display:inline;
+	display:inline-block;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11;
+	font-weight:bold;
+	height:30px;
+	padding-left:8px;
+	padding-right:8px;
+	position:relative;
+	text-align:center;
+	vertical-align:top;
+}
+.header_button:hover
+{
+	background:#666;
+}
+
+#header_logo
+{
+	height:26px;
+	top:3px;
+	position:relative;	
+}
+
+#header_picture
+{
+	height:26px;
+	position:relative;
+	top:2px;
+	vertical-align:top;	
+}
+/* CSS Document */
+
