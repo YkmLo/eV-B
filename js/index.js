@@ -2,7 +2,7 @@
 $(document).ready(function()
 { 
 
-$('.fb_button').click(function () {
+$('#fb_button').click(function () {
 	fb_dialog = window.open('', 'Facebook', 'menubar=no,width=790,height=360,toolbar=no');
   
     var form_data = {
