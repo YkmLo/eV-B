@@ -84,11 +84,26 @@ class Index extends CI_Controller {
 		
 		if ($state != null && $state != '' && $state == $this->config->item('app_salt') && $code != null && $code != '')
 		{
-			$token_url = "https://graph.facebook.com/oauth/access_token?" . "client_id=" . $fb_conf['app_id'] . "&redirect_uri=" . base_url() . 'fb_authorized&client_secret=' . $fb_conf['app_secret'] . "&code=" . $code;
+			$token_url = "https://graph.facebook.com/oauth/access_token?" . "client_id=" . $fb_conf['app_id'] . "&redirect_uri=" . urlencode(base_url() . 'fb_authorized') . '&client_secret=' . $fb_conf['app_secret'] . "&code=" . $code;
+						
 			try
-			{
-				$response = file_get_contents($token_url);
+			{			
+				$ch = curl_init ($token_url);
+	
+				curl_setopt($ch, CURLOPT_HEADER, 0);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+				curl_setopt($ch, CURLOPT_SSLVERSION, 3);
+				curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+				/** ignore ssl verification */
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+				/** end of ignore ssl verification */
+		
+				$response=curl_exec($ch);
+				curl_close ($ch);
 				$params = null;
+				
 				parse_str($response, $params);
 			}
 			catch (Exeption $e)
@@ -103,44 +118,61 @@ class Index extends CI_Controller {
 			$graph_url = "https://graph.facebook.com/me?access_token=" . $params['access_token'];
 			
 			$fb_profile = null;
-			$fb_profile = json_decode(file_get_contents($graph_url));
+			
+			$ch = curl_init ($graph_url);
+	
+			curl_setopt($ch, CURLOPT_HEADER, 0);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+			curl_setopt($ch, CURLOPT_SSLVERSION, 3);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+			/** ignore ssl verification */
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+			/** end of ignore ssl verification */
+	
+			$fb_obj=curl_exec($ch);
+			curl_close ($ch);
+			
+			$fb_profile = json_decode($fb_obj);
 			
 			//convert fb_profile to array
 			$fb_profile = object_to_array($fb_profile);
 			
 			if ($fb_profile != null)
 			{
+				$this->load->model('user_model');
+				
 				$exists_data['fb_id'] = $fb_profile['id'];
 				
 				$response = $this->user_model->exists($exists_data);
 				
 				if ($response != null)
 				{
-					if ($response->status == 'success')
-					{ //user exists in database, log the user in and then redirect to home
-						$fb_data['userid_pk'] = $response->user_data->userid_pk;
-						$fb_data['fb_id'] = $fb_profile['id'];
-						$fb_data['fb_access_token'] = Fb::get()->getExtendedAccessToken();
-						
-						$update_data['user_data'] = $fb_data;
-						
-						$update_response = $this->user_model->update($update_data);
-						
-						$this->session->set_userdata(array("userid_pk" => $response->user_data->userid_pk));
-						$this->session->set_userdata(array("logged_in" => true));
-						
-						echo '<script>';
-						echo 'window.opener.location.replace("/home");';
-						echo 'self.close();';
-						echo '</script>';
-					}
-					else
-					{ //user doesn't exists in database, register
-						echo '<script>';
-						echo 'window.opener.location.replace("http://google.com");';
-						echo 'self.close();';
-						echo '</script>';
-					}
+					//user exists in database, log the user in and then redirect to home
+					$fb_data['userid_pk'] = $response->user_data->userid_pk;
+					$fb_data['fb_id'] = $fb_profile['id'];
+					$fb_data['fb_access_token'] = Fb::get()->getExtendedAccessToken();
+					
+					$update_data['user_data'] = $fb_data;
+					
+					$update_response = $this->user_model->update($update_data);
+					
+					$this->session->set_userdata(array("userid_pk" => $response->user_data->userid_pk));
+					$this->session->set_userdata(array("logged_in" => true));
+					
+					echo '<script>';
+					echo 'window.opener.location.replace("/home");';
+					echo 'self.close();';
+					echo '</script>';
+				}
+				else
+				{
+					//user doesn't exists in database, register
+					echo '<script>';
+					echo 'window.opener.location.replace("http://google.com");';
+					echo 'self.close();';
+					echo '</script>';
 				}
 			}
 		}
