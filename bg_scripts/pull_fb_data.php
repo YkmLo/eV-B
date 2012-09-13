@@ -11,12 +11,13 @@ $fb = new Facebook(array(
 $fb_access_token = $argv[1];
 $base_path = $argv[2];
 $user_id = $argv[3];
+$base_url = $argv[4];
 
 $fb->setAccessToken($fb_access_token);
 
 $user_data_folder = md5('dfgWERD3423DF3rdsfhg5345DFS3G45!' . $user_id);
 
-$save_path = $base_path . $user_data_folder;
+$save_path = $base_path . 'data';
 
 $photos = array();
 
@@ -29,7 +30,7 @@ process_array();
 
 function get_photos($page)
 {
-	global $fb, $user_id, $photos;
+	global $fb, $user_id, $photos, $base_url;
 	$fb_photos = $fb->api($page);
 	
 	if (count($fb_photos['data']) == 0)
@@ -41,18 +42,69 @@ function get_photos($page)
 		
 		$tags = explode($caption, '#');
 		
-		
-		$flag_tag = false;
-		foreach($fb_photo['tags']['data'] as $tagged)
+		if (count($tags) > 1)
 		{
-			if(isset($tagged['id']) && $tagged['id'] == $couple_fb_id)
+			$url = $fb_photo['source'];
+			$saveto = $save_path . '/' . $fb_photo['id'] . '.jpg';
+	
+			if(!file_exists($saveto))
 			{
-				$flag_tag = true;
-				break;
+				$ch = curl_init ($url);
+		
+				curl_setopt($ch, CURLOPT_HEADER, 0);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+				curl_setopt($ch, CURLOPT_SSLVERSION, 3);
+				curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+				/** ignore ssl verification */
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+				/** end of ignore ssl verification */
+		
+				$raw=curl_exec($ch);
+				curl_close ($ch);
+			
+				$fp = fopen($saveto,'x');
+		
+				fwrite($fp, $raw);
+				fclose($fp);
+			}
+			
+			foreach($tags as $tag)
+			{
+				//set POST variables
+				$url = $base_url . 'api/moments/create';
+				$fields = array(
+							 "photo" => urlencode($fb_photo['id']),
+							 "tag" => urlencode($tag)
+						 );
+						 
+				$fields_string = '';
+			
+				//url-ify the data for the POST
+				foreach($fields as $key=>$value)
+				{
+					$fields_string .= $key.'='.$value.'&';
+				}
+				
+				rtrim($fields_string, '&');
+			
+				//open connection
+				$ch = curl_init();
+			
+				//set the url, number of POST vars, POST data
+				curl_setopt($ch,CURLOPT_URL,$url);
+				curl_setopt($ch,CURLOPT_POST,count($fields));
+				curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
+				curl_setopt($ch,CURLOPT_HTTPAUTH,CURLAUTH_DIGEST);
+			
+				//execute post
+				$result = curl_exec($ch);
+			
+				//close connection
+				curl_close($ch);
 			}
 		}
-		if($flag_tag == true)
-		    $photos[] = $fb_photo;
 	}
 	
 	if (isset($fb_photos['paging']))
@@ -70,79 +122,3 @@ function get_photos($page)
 	else
 		return;
 }
-
-function process_array()
-{
-    global $save_path, $user_id, $couple_id, $photos;
-    foreach (array_reverse($photos, true) as $fb_photo)
-    {
-        $url = $fb_photo['source'];
-	    $saveto = $save_path . '/moment_' . (microtime(true) * 10000) . '.jpg';
-
-	    $ch = curl_init ($url);
-
-	    curl_setopt($ch, CURLOPT_HEADER, 0);
-	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	    curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
-	    curl_setopt($ch, CURLOPT_SSLVERSION, 3);
-	    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-	    /** ignore ssl verification */
-	    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-	    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-	    /** end of ignore ssl verification */
-
-	    $raw=curl_exec($ch);
-	    curl_close ($ch);
-
-	    if(file_exists($saveto))
-		    unlink($saveto);
-	
-	    $fp = fopen($saveto,'x');
-
-	    fwrite($fp, $raw);
-	    fclose($fp);
-	
-	    create_moment($couple_id, $user_id, $saveto);
-	}
-}
-
-function create_moment($couple_id, $initiator_id, $save_path)
-{
-	//set POST variables
-	$url = 'http://api.lopidopi.dev:8080/api/moments/create';
-	$fields = array(
-		         "couple_id" => urlencode($couple_id),
-					"photo_directory" => urlencode($save_path),
-					"initiator_id" => urlencode($initiator_id),
-					"privacy" => urlencode('public'),
-					"type" => urlencode('single_photo')
-		     );
-		     
-	$fields_string = '';
-
-	//url-ify the data for the POST
-	foreach($fields as $key=>$value)
-	{
-		$fields_string .= $key.'='.$value.'&';
-	}
-	
-	rtrim($fields_string, '&');
-
-	//open connection
-	$ch = curl_init();
-
-	//set the url, number of POST vars, POST data
-	curl_setopt($ch,CURLOPT_URL,$url);
-	curl_setopt($ch,CURLOPT_POST,count($fields));
-	curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
-	curl_setopt($ch,CURLOPT_USERPWD,'web:web');
-	curl_setopt($ch,CURLOPT_HTTPAUTH,CURLAUTH_DIGEST);
-
-	//execute post
-	$result = curl_exec($ch);
-
-	//close connection
-	curl_close($ch);
-}
-
-?>

@@ -159,6 +159,7 @@ class Index extends CI_Controller {
 					$update_response = $this->user_model->update($fb_data['userid_pk'], $fb_data);
 					
 					$this->session->set_userdata(array("userid_pk" => $response['0']['userid_pk']));
+					$this->session->set_userdata(array("user_data" => $response['0']));
 					$this->session->set_userdata(array("logged_in" => true));
 					
 					echo '<script>';
@@ -181,7 +182,7 @@ class Index extends CI_Controller {
 					$this->user_model->set($new_user_data);
 					
 					echo '<script>';
-					echo 'window.opener.location.replace("http://google.com");';
+					echo 'window.opener.location.replace("/home");';
 					echo 'self.close();';
 					echo '</script>';
 				}
