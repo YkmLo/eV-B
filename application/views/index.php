@@ -18,9 +18,9 @@
 
       <div data-role="page">
          <a name="top"></a>
-         <?php echo $header; ?>
-         <?php echo $content; ?>
-         <?php echo $footer; ?>
+        <div id="main_header"><?php echo $header; ?></div>
+         <div id="main_body"><?php echo $content; ?></div>
+         <div id="main_footer"><?php echo $footer; ?></div>
 
       </div><!-- /page -->
 
