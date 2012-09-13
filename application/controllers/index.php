@@ -39,7 +39,14 @@ class Index extends CI_Controller {
       $this->load->view('index', $view_data);
    }
    
-   public function book() {
+   public function book($book_id) {
+	  $this->load->model('items_model');
+	  $data['bookid_fk'] = $book_id;
+	  
+	  //$item_count = $this->items_model->count_items($book_id);
+	  
+	  $view_data['item_count'] = 30;
+	  $view_data['book_id'] = $book_id;
 
       $view_data['header'] = $this->load->view('header', $view_data, true);
       $view_data['content'] = $this->load->view('book', $view_data, true);
@@ -280,5 +287,20 @@ class Index extends CI_Controller {
 
 		//exec($command);
 		echo  json_encode(array('status' => 'success'));
+	}
+	
+	public function get_item()
+	{
+		$this->load->model('items_model');
+		$book_id = $this->input->get('book_id');
+		$skip = $this->input->get('skip');
+		
+		$item['location'] = 'http://ev-b.dev/data/123.jpg';
+		$item['uploader_name'] = 'Jeffry Antonio';
+		$item['timestamp'] = '2 hours ago';
+		$item['caption'] = 'abc def';
+		$item['profile_picture_path'] = 'http://ev-b.dev/data/qwe.jpg';
+		
+		echo json_encode($item);
 	}
 }
