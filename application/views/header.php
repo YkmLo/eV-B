@@ -53,18 +53,16 @@ function go_search()
 </script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-
-<div id="header">
-    <div id="header_center">
-    	
-        <?php if ($current_user_name): ?>
-   			<div id="header_center_left">
-				<img src="<?php echo base_url() ?>images/logo.png" id="header_logo"/>
+<?php if ($user_data): ?>
+    <div id="header">
+        <div id="header_center">
+            <div id="header_center_left">
+                <img src="<?php echo base_url() ?>images/logo.png" id="header_logo"/>
                 <input placeholder="type the picture hashtag" type="text" id="header_search" onkeypress="search_enter(event)" 
                 onkeyup="javascript:
                     var a = $('#header_search').val();
                     var b = GD.base_url + 'hash_autocomplete/' + a;
-
+    
                     $(this).autocomplete({
                                 source: b,
                                 select: function(event, ui) {
@@ -74,13 +72,13 @@ function go_search()
                             });">
             </div>
             <div id="header_center_right">
-	            <a href="#">
-                	<div class="header_button" ><img src="https://graph.facebook.com/me/picture?access_token=<?php echo $fbat ?>" id="header_picture" /> <?php echo $current_user_name; ?></div>
+                <a href="#">
+                    <div class="header_button" ><img src="https://graph.facebook.com/me/picture?access_token=<?php echo $fbat ?>" id="header_picture" /> <?php echo $current_user_name; ?></div>
                 </a>
                 <a href="<?php echo base_url() ?>logout">
-                	<div class="header_button">Logout</div>
+                    <div class="header_button">Logout</div>
                 </a>
             </div>
-    	<?php endif; ?>
+        </div>
     </div>
-</div>
+<?php endif; ?>
