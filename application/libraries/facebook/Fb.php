@@ -13,8 +13,8 @@
                 return;
     
             self::$facebook = new Facebook(array(
-                'appId'  => '178386398905478',
-                'secret' => '92147a9f7bce3da8cf409c8ab2997185',
+                'appId'  => '277019759074470',
+                'secret' => 'ddcec0b3141558e73bbf4cd94dcea6dc',
                 'cookie' => true
             ));
             self::$initialized = true;
