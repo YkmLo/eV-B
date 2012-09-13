@@ -45,9 +45,7 @@ class user_model extends CI_Model {
 //	}
 //	
 	public function set($data)
-	{	
-	echo"lalalala";
-	   print_r($data);exit;	
+	{
 		return $this->db->insert($this->table_name, $data);
 	}
 	
