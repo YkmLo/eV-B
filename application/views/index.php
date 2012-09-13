@@ -4,13 +4,14 @@
    <head>
       <title>eV-B</title>
       <link href="<?php echo base_url() ?>css/index.css" rel="stylesheet" type="text/css" />
-      <script src="<?php echo base_url(); ?>js/jquery.min.js"></script>
-<script src="<?php echo base_url();?>js/index.js"></script>
-<script type="text/javascript">
+      <script type="text/javascript">
 	   var GD = {
 		  'base_url': '<?php echo base_url(); ?>'
 	   };
 </script>
+
+      <script src="<?php echo base_url(); ?>js/jquery.min.js"></script>
+		<script src="<?php echo base_url();?>js/index.js"></script>
    </head>
 
    <body>
