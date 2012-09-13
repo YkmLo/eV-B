@@ -23,10 +23,31 @@
 	z-index:-2;
 }
 
-.book_collection img
-{
+.book{
+	display:inline-block;
+	width:230px;
+	height:179px;
+	background-color:#000;
+	background:url(../images/book.png) no-repeat;
 	margin-right:30px;
 	margin-left:30px;
+}
+.image_book{
+	display:block;
+	margin:auto;
+	margin-top:10px;
+	width:150px;
+	height:90px;
+	
+}
+.image_content{
+	margin:auto;
+}
+.image_hash
+{
+	font:Arial, Helvetica, sans-serif;
+	color:#ffffff;
+	margin-top:10px;
 }
 #button_add{
 	border:none;
