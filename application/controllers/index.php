@@ -9,7 +9,7 @@ class Index extends CI_Controller {
       parent::__construct();
       error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
       $this->load->helper('url');
- 
+		$this->load->library('facebook/Fb');
    }
    
    
@@ -56,7 +56,7 @@ class Index extends CI_Controller {
 		if ($type == 'connect')
 		{
 			$fb_conf = $this->config->item('facebook');
-			$dialog_url = 'http://www.facebook.com/dialog/oauth?client_id=' . $fb_conf['app_id'] . '&redirect_uri=' . base_url() . 'fb_authorized&state=' . $this->config->item('app_salt') . 'scope=email,user_about_me,user_activities,user_photos,user_videos,friends_photos,friends_videos,publish_stream,read_friendlists';
+			$dialog_url = 'http://www.facebook.com/dialog/oauth?client_id=' . $fb_conf['app_id'] . '&redirect_uri=' . base_url() . 'fb_authorized&state=' . $this->config->item('app_salt') . '&scope=email,user_about_me,user_activities,user_photos,user_videos,friends_photos,friends_videos,publish_stream,read_friendlists';
 			
 			echo json_encode(array('status' => 'success', 'url' => $dialog_url));
 			
@@ -80,7 +80,9 @@ class Index extends CI_Controller {
 		
 		$fb_conf = $this->config->item('facebook');
 		
-		if ($state != null && $state != '' && $state == $this->config->item('lopidopi_salt') && $code != null && $code != '')
+		
+		
+		if ($state != null && $state != '' && $state == $this->config->item('app_salt') && $code != null && $code != '')
 		{
 			$token_url = "https://graph.facebook.com/oauth/access_token?" . "client_id=" . $fb_conf['app_id'] . "&redirect_uri=" . base_url() . 'fb_authorized&client_secret=' . $fb_conf['app_secret'] . "&code=" . $code;
 			try
@@ -135,7 +137,7 @@ class Index extends CI_Controller {
 					else
 					{ //user doesn't exists in database, register
 						echo '<script>';
-						echo 'window.opener.location.replace("/register?ref=fb");';
+						echo 'window.opener.location.replace("http://google.com");';
 						echo 'self.close();';
 						echo '</script>';
 					}
