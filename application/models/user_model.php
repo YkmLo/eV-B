@@ -46,7 +46,16 @@ class user_model extends CI_Model {
 //	
 	public function set($data)
 	{
-		return $this->db->insert($this->table_name, $data);
+		$id = $this->db->insert($this->table_name, $data);
+		
+		$data = array(
+			'userid_pk' => $id
+		);
+		
+		$users = $this->exists($data);
+		
+		if($users != NULL)
+			return $users;
 	}
 	
 	public function update($id, $data)
